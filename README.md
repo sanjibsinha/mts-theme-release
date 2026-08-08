@@ -67,6 +67,6 @@ This project is licensed under the GPL v2 or later License.
 
 ## 👨‍💻 Author
 
-Developed by Sanjib Sinha.
+Developed by Sanjib Sinha and Gemini AI.
 
 ---
