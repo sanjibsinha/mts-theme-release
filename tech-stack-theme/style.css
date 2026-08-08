@@ -1,0 +1,905 @@
+/*
+Theme Name: Tech Stack Custom
+Author: Your Name
+Description: A lightweight, bespoke theme for tech blogs, code repositories, and applications.
+Version: 1.0
+Text Domain: techstack
+*/
+
+/* ==========================================================================
+   1. CSS Variables
+   ========================================================================== */
+:root {
+    --primary-color: #2c3e50;
+    --text-color: #333333;
+    --background-color: #f9f9f9;
+    --link-color: #3498db;
+    --link-hover-color: #2980b9;
+    --site-width: 1200px;
+    --font-system: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
+
+/* ==========================================================================
+   2. Modern Reset & Box Sizing
+   ========================================================================== */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body, h1, h2, h3, h4, h5, h6, p, ul, ol, figure, blockquote {
+    margin: 0;
+    padding: 0;
+}
+
+/* ==========================================================================
+   3. Base Typography
+   ========================================================================== */
+body {
+    font-family: var(--font-system);
+    color: var(--text-color);
+    background-color: var(--background-color);
+    line-height: 1.6;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--primary-color);
+    line-height: 1.2;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+a {
+    color: var(--link-color);
+    text-decoration: none;
+    transition: color 0.2s ease-in-out;
+}
+
+a:hover, a:focus {
+    color: var(--link-hover-color);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* ==========================================================================
+   4. Core Layout Container
+   ========================================================================== */
+.site {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.site-header,
+.site-content,
+.site-footer {
+    width: 100%;
+    max-width: var(--site-width);
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+
+/* Push the footer to the bottom of the screen */
+.site-content {
+    flex-grow: 1; 
+}
+
+/* ==========================================================================
+   5. Header & Navigation Basics
+   ========================================================================== */
+.site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.site-title {
+    margin-bottom: 0;
+    font-size: 1.5rem;
+}
+
+.site-title a {
+    color: var(--primary-color);
+}
+
+.site-description {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* ==========================================================================
+   6. Essential WordPress Classes
+   ========================================================================== */
+.alignleft { float: left; margin: 0.5em 1em 0.5em 0; }
+.alignright { float: right; margin: 0.5em 0 0.5em 1em; }
+.aligncenter { display: block; margin-left: auto; margin-right: auto; }
+.wp-caption { max-width: 100%; }
+.screen-reader-text {
+    border: 0;
+    clip: rect(1px, 1px, 1px, 1px);
+    clip-path: inset(50%);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+    word-wrap: normal !important;
+}
+
+/* ==========================================================================
+   7. Front Page Custom Grid (Ayro Style)
+   ========================================================================== */
+.techstack-grid {
+    display: grid;
+    /* Creates a responsive grid that automatically adds columns as screen widens */
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+    align-items: start;
+    padding-top: 2rem;
+}
+
+/* --- Top Left Intro Block --- */
+.intro-block {
+    padding: 2rem 2rem 2rem 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+}
+
+.intro-block .site-title {
+    font-size: 4rem;
+    font-weight: 800;
+    color: #1a1a1a;
+    margin-bottom: 1rem;
+    position: relative;
+    letter-spacing: -1px;
+}
+
+/* Adding the pink dot effect from the design */
+.intro-block .site-title::after {
+    content: "•";
+    color: #ff477e;
+    font-size: 2rem;
+    vertical-align: super;
+    line-height: 0;
+}
+
+.intro-block .site-description {
+    font-size: 1.3rem;
+    color: #888;
+    line-height: 1.5;
+    margin-bottom: 3rem;
+}
+
+.author-badge {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #a0a0a0;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.badge-icon {
+    background-color: #1a2a40;
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 2px;
+}
+
+/* --- Post Cards --- */
+.post-card {
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+    background: #f4f4f4;
+    aspect-ratio: 16 / 10; /* Ensures all boxes are identically sized rectangles */
+}
+
+.post-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Prevents image distortion */
+    transition: transform 0.4s ease;
+}
+
+.post-card:hover img {
+    transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+.post-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 1.5rem;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    color: #fff;
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.3s ease;
+}
+
+.post-card:hover .post-overlay {
+    opacity: 1; /* Appears on hover */
+}
+
+.post-overlay h2 {
+    color: #fff;
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.post-type-label {
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+    opacity: 0.8;
+    margin-bottom: 5px;
+    display: block;
+}
+
+/* ==========================================================================
+   8. Single Post / Article Layout
+   ========================================================================== */
+.single-article {
+    max-width: 800px; /* Optimal reading width */
+    margin: 0 auto;
+    padding: 2rem 0;
+}
+
+.entry-header {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.entry-label {
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    color: var(--link-color);
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.entry-title {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.entry-meta {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.entry-thumbnail {
+    margin-bottom: 2rem;
+}
+
+.entry-thumbnail img {
+    border-radius: 4px;
+    width: 100%;
+}
+
+.entry-content {
+    font-size: 1.125rem; /* Slightly larger text for reading */
+    line-height: 1.8;
+}
+
+.entry-content h2, 
+.entry-content h3 {
+    margin-top: 2rem;
+}
+
+/* Post Navigation Formatting */
+.post-navigation {
+    max-width: 800px;
+    margin: 3rem auto;
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid #eaeaea;
+    padding-top: 1.5rem;
+}
+
+.post-navigation a {
+    font-weight: 600;
+}
+
+/* ==========================================================================
+   9. Navigation Menu
+   ========================================================================== */
+.main-navigation ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.main-navigation li {
+    position: relative;
+}
+
+.main-navigation a {
+    color: var(--text-color);
+    font-weight: 600;
+    font-size: 1rem;
+    text-transform: capitalize;
+}
+
+.main-navigation a:hover,
+.main-navigation a:focus {
+    color: var(--primary-color);
+}
+
+/* ==========================================================================
+   10. Blog Archive Layout (home.php)
+   ========================================================================== */
+.archive-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.archive-description {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+.blog-archive-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.blog-card {
+    background: #fff;
+    border: 1px solid #eaeaea;
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.3s ease;
+}
+
+.blog-card:hover {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.blog-thumbnail img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+}
+
+.blog-card-content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.blog-card-content .entry-meta {
+    font-size: 0.85rem;
+    color: #888;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.blog-card-content .entry-title {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+}
+
+.blog-card-content .entry-title a {
+    color: var(--text-color);
+}
+
+.blog-card-content .entry-title a:hover {
+    color: var(--link-color);
+}
+
+.blog-card-content .entry-summary {
+    color: #555;
+    font-size: 0.95rem;
+    margin-bottom: 0;
+}
+
+/* Pagination Styling */
+.archive-pagination .nav-links {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+}
+
+.archive-pagination .page-numbers {
+    padding: 0.5rem 1rem;
+    background: #f9f9f9;
+    border: 1px solid #eaeaea;
+    color: var(--text-color);
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+.archive-pagination .page-numbers.current,
+.archive-pagination .page-numbers:hover {
+    background: var(--primary-color);
+    color: #fff;
+    border-color: var(--primary-color);
+}
+
+/* ==========================================================================
+   11. Repository Archive Layout (archive-repository.php)
+   ========================================================================== */
+.repo-archive-grid {
+    display: grid;
+    /* Slightly wider columns than the blog for better text flow */
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.repo-card {
+    background: #ffffff;
+    border: 1px solid #e1e4e8; /* GitHub-style subtle border */
+    border-radius: 6px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.repo-card:hover {
+    border-color: #0366d6;
+    box-shadow: 0 2px 8px rgba(3, 102, 214, 0.15);
+}
+
+.repo-card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1rem;
+}
+
+.repo-icon {
+    width: 20px;
+    height: 20px;
+    color: #586069;
+}
+
+.repo-title {
+    font-size: 1.25rem;
+    margin: 0;
+    font-weight: 600;
+}
+
+.repo-title a {
+    color: var(--primary-color);
+}
+
+.repo-summary {
+    color: #586069;
+    font-size: 0.95rem;
+    flex-grow: 1;
+    margin-bottom: 1.5rem;
+}
+
+.repo-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+    color: #888;
+    border-top: 1px solid #eaeaea;
+    padding-top: 1rem;
+}
+
+.repo-link {
+    font-weight: 600;
+    color: var(--link-color);
+}
+
+.repo-link:hover {
+    color: var(--link-hover-color);
+}
+
+/* ==========================================================================
+   12. Application Archive Layout (archive-application.php)
+   ========================================================================== */
+.app-archive-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.app-card {
+    background: #fff;
+    border: 1px solid #eaeaea;
+    border-radius: 8px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.app-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+.app-thumbnail {
+    display: block;
+    margin: 0 auto 1.5rem;
+    width: 100px;
+    height: 100px;
+    border-radius: 20%; /* Squircle look for app icons */
+    overflow: hidden;
+    background: #f9f9f9;
+}
+
+.app-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.app-thumbnail.placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px dashed #ccc;
+}
+
+.app-card-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.app-title {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+}
+
+.app-title a {
+    color: var(--primary-color);
+}
+
+.app-summary {
+    color: #666;
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+}
+
+.app-button {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+}
+
+.app-button:hover,
+.app-button:focus {
+    background-color: var(--link-hover-color);
+    color: #fff;
+}
+
+/* ==========================================================================
+   13. Single Blog Post Details (single-post.php)
+   ========================================================================== */
+.blog-article .entry-meta {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.85rem;
+    color: #888;
+    margin-bottom: 1rem;
+}
+
+.article-taxonomies {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #eaeaea;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.article-taxonomies a {
+    color: var(--text-color);
+    background: #f4f4f4;
+    padding: 2px 8px;
+    border-radius: 4px;
+    transition: background 0.2s ease;
+}
+
+.article-taxonomies a:hover {
+    background: #e1e1e1;
+}
+
+.post-navigation-wrapper {
+    max-width: 800px;
+    margin: 3rem auto;
+    border-top: 2px solid #1a1a1a;
+    padding-top: 2rem;
+}
+
+.nav-links {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+.nav-previous,
+.nav-next {
+    display: flex;
+    flex-direction: column;
+    max-width: 45%;
+}
+
+.nav-next {
+    text-align: right;
+}
+
+.nav-subtitle {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #888;
+    margin-bottom: 0.5rem;
+}
+
+.nav-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+/* ==========================================================================
+   14. Single Repository Details (single-repository.php)
+   ========================================================================== */
+.repo-article {
+    max-width: 1000px; /* Wider layout for code blocks */
+}
+
+.repo-header {
+    text-align: left; /* Left align for technical docs */
+    border-bottom: 1px solid #eaeaea;
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+}
+
+.repo-meta-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.repo-meta-top .entry-label {
+    margin-bottom: 0;
+}
+
+.repo-meta-top .posted-on {
+    font-size: 0.85rem;
+    color: #888;
+}
+
+.repo-title {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+}
+
+/* GitHub Button */
+.repo-actions {
+    margin-top: 1.5rem;
+}
+
+.repo-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #24292e;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+}
+
+.repo-btn:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+/* Developer-friendly Code Blocks */
+.repo-content pre {
+    background: #1e1e1e;
+    color: #d4d4d4;
+    padding: 1.5rem;
+    border-radius: 6px;
+    overflow-x: auto;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 2rem 0;
+    border: 1px solid #333;
+}
+
+.repo-content code {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.repo-tags {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #eaeaea;
+    font-size: 0.9rem;
+}
+
+/* ==========================================================================
+   15. Single Application Details (single-application.php)
+   ========================================================================== */
+.app-article {
+    max-width: 900px; /* Slightly wider to accommodate side-by-side header */
+}
+
+.app-header {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid #eaeaea;
+    text-align: center;
+}
+
+/* Desktop layout for the App Header */
+@media (min-width: 768px) {
+    .app-header {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        text-align: left;
+    }
+    
+    .app-header-content {
+        flex: 1;
+        padding-right: 2rem;
+    }
+
+    .app-hero-image {
+        flex: 1;
+        max-width: 50%;
+    }
+}
+
+.app-title {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+}
+
+.app-version {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 2rem;
+    font-weight: 600;
+}
+
+.app-hero-image img {
+    border-radius: 12px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1); /* Adds depth to the screenshot */
+    width: 100%;
+    height: auto;
+}
+
+/* Download Button Formatting */
+.app-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background-color: var(--primary-color);
+    color: #fff;
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.app-btn:hover {
+    background-color: var(--link-hover-color);
+    color: #fff;
+    transform: translateY(-2px); /* Slight lift effect on hover */
+}
+
+.app-content {
+    font-size: 1.125rem;
+    line-height: 1.8;
+}
+
+/* ==========================================================================
+   16. 404 Error Page (404.php)
+   ========================================================================== */
+.error-404 {
+    text-align: center;
+    max-width: 600px;
+    margin: 4rem auto 6rem;
+    padding: 0 1.5rem;
+}
+
+.error-404 .page-title {
+    font-size: 4rem;
+    font-weight: 800;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    letter-spacing: -1px;
+}
+
+.error-404 .page-content p {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.search-form-wrapper {
+    margin-bottom: 3rem;
+}
+
+.search-form-wrapper input[type="search"] {
+    padding: 12px;
+    width: 70%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.search-form-wrapper input[type="submit"] {
+    padding: 12px 20px;
+    background: var(--primary-color);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.search-form-wrapper input[type="submit"]:hover {
+    background: var(--link-hover-color);
+}
+
+.back-home-btn {
+    display: inline-block;
+    font-weight: 600;
+    color: var(--link-color);
+}
+
+.back-home-btn:hover {
+    color: var(--link-hover-color);
+    text-decoration: underline;
+}
+
